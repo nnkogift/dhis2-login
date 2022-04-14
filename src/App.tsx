@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Login from "./auth/login";
+import {Provider} from "@dhis2/app-runtime";
+import {Route, Routes, BrowserRouter as Router} from "react-router-dom";
+import Home from "./home";
+
+const config = {
+    baseUrl: process.env.REACT_APP_DHIS2_BASE_URL ?? "http://localhost:8080",
+    apiVersion: 37
+}
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Provider config={config}>
+            <Router>
+                <Routes>
+                    <Route element={<Login/>} path="/"/>
+                    <Route element={<Home/>} path="/home"/>
+                </Routes>
+            </Router>
+        </Provider>
+    );
 }
 
 export default App;
